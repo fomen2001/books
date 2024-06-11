@@ -21,10 +21,18 @@ class DatabaseSeeder extends Seeder
         'role-create',
         'role-edit',
         'role-delete',
-        'product-list',
-        'product-create',
-        'product-edit',
-        'product-delete'
+
+        'books-list',
+        'books-create',
+        'books-edit',
+        'books-view',
+        'books-delete',
+
+        'cart-list',
+        'cart-create',
+        'cart-edit',
+        'cart-view',
+        'cart-delete'
     ];
 
 

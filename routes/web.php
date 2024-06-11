@@ -4,7 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,9 +17,11 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
+// routes/web.php
+Route::get('/welcome', function () {
     return view('welcome');
-});
+})->name('welcome');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,7 +35,14 @@ Route::middleware('auth')->group(function () {
     // Our resource routes
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
-    Route::resource('products', ProductController::class);
+    Route::resource('books', BookController::class);
+    Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
+
+    Route::post('/cart/add/{book}', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::patch('/cart/update/{book}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{book}', [CartController::class, 'remove'])->name('cart.remove');
+    
 });
 
 require __DIR__.'/auth.php';
