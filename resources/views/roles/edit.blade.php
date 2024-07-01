@@ -1,21 +1,17 @@
 @extends('layouts.master')
 
-
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit Role
-                    <div class="float-end">
-                        <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
-                    </div>
-                </h2>
+<div class="container py-4 shadow-card">
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>Edit Role</h3>
+                <a class="btn btn-primary" href="{{ route('roles.index') }}">Back</a>
             </div>
         </div>
     </div>
 
-
-    @if (count($errors) > 0)
+    @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
             <ul>
@@ -26,34 +22,41 @@
         </div>
     @endif
 
-    <form action="{{ route('roles.update', $role->id) }}" method="PATCH">
+    <form action="{{ route('roles.update', $role->id) }}" method="POST">
         @csrf
-        <div class="row">
-            <div class="col-xs-12 mb-3">
+        @method('PATCH')
+        <div class="row mb-3">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <strong>Name:</strong>
-                    <input type="text" value="{{ $role->name }}" name="name" class="form-control"
-                        placeholder="Name">
+                    <label for="name"><strong>Name:</strong></label>
+                    <input type="text" id="name" name="name" value="{{ $role->name }}" class="form-control" placeholder="Name">
                 </div>
             </div>
-            <div class="col-xs-12 mb-3">
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <strong>Permission:</strong>
-                    <br />
-                    @foreach ($permission as $value)
-                        <label>
-                            <input type="checkbox" @if (in_array($value->id, $rolePermissions)) checked @endif name="permission[]"
-                                value="{{ $value->id }}" class="name">
-                            {{ $value->name }}</label>
-                        <br />
-                    @endforeach
+                    <label><strong>Permission:</strong></label>
+                    <div class="d-flex flex-wrap">
+                        @foreach ($permission as $value)
+                            <div class="form-check me-3">
+                                <input type="checkbox" class="form-check-input" id="permission-{{ $value->id }}" name="permission[]" value="{{ $value->id }}" @if (in_array($value->id, $rolePermissions)) checked @endif>
+                                <label class="form-check-label" for="permission-{{ $value->id }}">
+                                    {{ $value->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12 mb-3 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-12 text-start">
+                <button type="submit" class="btn btn-primary font-monospace">Modifier</button>
             </div>
         </div>
     </form>
-
-
+</div>
 @endsection

@@ -19,8 +19,15 @@ class DatabaseSeeder extends Seeder
     private $permissions = [
         'role-list',
         'role-create',
+        'role-view',
         'role-edit',
         'role-delete',
+
+        'user-list',
+        'user-create',
+        'user-edit',
+        'user-view',
+        'user-delete',
 
         'books-list',
         'books-create',
@@ -30,9 +37,11 @@ class DatabaseSeeder extends Seeder
 
         'cart-list',
         'cart-create',
-        'cart-edit',
-        'cart-view',
-        'cart-delete'
+        'cart-delete',
+
+        'checkout-list',
+
+        'sales-list'
     ];
 
 
@@ -47,7 +56,7 @@ class DatabaseSeeder extends Seeder
 
         // Create admin User and assign the role to him.
         $user = User::create([
-            'name' => 'Prevail Ejimadu',
+            'name' => 'Fomena',
             'email' => 'test@example.com',
             'password' => Hash::make('password')
         ]);

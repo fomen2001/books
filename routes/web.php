@@ -6,6 +6,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SalesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,11 +40,28 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('books', BookController::class);
     Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
+    //Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
 
     Route::post('/cart/add/{book}', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::patch('/cart/update/{book}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{book}', [CartController::class, 'remove'])->name('cart.remove');
+
+
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+
+
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+
+
+
+
+Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
+
     
 });
 

@@ -60,6 +60,9 @@
             <div class="d-flex justify-content-end">
                 <h3>Total: ${{ array_sum(array_column($cart, 'price')) }}</h3>
             </div>
+            <div>
+                <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to Payment</a>
+            </div>
         @endif
     </div>
     @endsection

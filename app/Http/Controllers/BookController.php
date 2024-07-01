@@ -13,6 +13,23 @@ class BookController extends Controller
             abort(403, 'Unauthorized action.');
         }
         $query = Book::query();
+        //dd($request->input('query'));
+        
+        if ($request->query) {
+            // $search = $request->query('search');
+            $query->where('title', 'LIKE', "%{$request->input('query')}%")
+            ->orWhere('author', 'LIKE', "%{$request->input('query')}%")
+            ->orWhere('description', 'LIKE', "%{$request->input('query')}%");
+            }
+            
+        $books = $query->get();
+       
+        return view('books.index', compact('books'));
+    }
+    public function search(Request $request)
+    {
+        $query = Book::query();
+        dd($request);
 
         if ($request->has('search')) {
             $search = $request->query('search');
@@ -22,8 +39,7 @@ class BookController extends Controller
         }
 
         $books = $query->get();
-
-        return view('books.index', compact('books'));
+        return view('books.search', compact('books'));
     }
 
     public function create()

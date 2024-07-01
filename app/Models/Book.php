@@ -15,4 +15,8 @@ class Book extends Model
         'price',
         'description'
     ];
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

@@ -9,12 +9,18 @@ class CartController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->can('cart-list')) {
+            abort(403, 'Unauthorized action.');
+        }
         $cart = session()->get('cart', []);
         return view('cart.index', compact('cart'));
     }
 
     public function add(Request $request, Book $book)
     {
+        if (!auth()->user()->can('cart-create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $cart = session()->get('cart', []);
 
         if(isset($cart[$book->id])) {
@@ -30,11 +36,14 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-        return redirect()->route('books.show', $book->id)->with('success', 'Book added to cart successfully!');
+        return redirect()->route('books.index', $book->id)->with('success', 'Book added to cart successfully!');
     }
 
     public function update(Request $request, Book $book)
     {
+        if (!auth()->user()->can('cart-create')) {
+            abort(403, 'Unauthorized action.');
+        }
         $cart = session()->get('cart', []);
         if(isset($cart[$book->id])) {
             $cart[$book->id]['quantity'] = $request->quantity;
@@ -46,6 +55,9 @@ class CartController extends Controller
 
     public function remove(Book $book)
     {
+        if (!auth()->user()->can('cart-delete')) {
+            abort(403, 'Unauthorized action.');
+        }
         $cart = session()->get('cart', []);
         if(isset($cart[$book->id])) {
             unset($cart[$book->id]);
